@@ -1,0 +1,16 @@
+import Header from "./components/Header";
+
+function App() {
+  return (
+    <div className="App">
+      <Header />
+      <h1>Aulapp</h1>
+      <h1>Aulapp</h1>
+      <h1>Aulapp</h1>
+      <h1>Aulapp</h1>
+      <h1>Aulapp</h1>
+    </div>
+  );
+}
+
+export default App;

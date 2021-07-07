@@ -1,0 +1,43 @@
+body{
+  font-family: 'Signika Negative', sans-serif;
+}
+
+h1, h2, h3{
+  font-weight: 600;
+}
+
+h1{
+  font-size:4rem;
+}
+
+p{
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.fondo {
+  width: 100%;
+}
+
+.back_header {
+  width: 100vw;
+  height: 75vh;
+  background-image: url('./assets/back_image.png');
+  background-size: cover;
+}
+
+.nav-style{
+  border-radius: 2rem;
+}
+
+.margin-auto{
+  margin: 0 auto;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-dark-gray{
+  color: rgb(42, 42, 42);
+}
