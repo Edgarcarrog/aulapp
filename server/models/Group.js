@@ -1,30 +1,33 @@
 
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const userSchema = Schema(
+const groupSchema = Schema(
   {
     name: {
       type: String,
       required: true,
       trim: true,
     },
-    email: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
-    },
-    password: {
+    grade: {
       type: String,
       required: true,
       trim: true,
     },
-    groups: [
+    cicle: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    students: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Group",
+        ref: "Student",
       },
     ],
+    teacher: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
@@ -32,4 +35,4 @@ const userSchema = Schema(
   }
 );
 
-module.exports = model("User", userSchema);
+module.exports = model('Group', groupSchema);
