@@ -4,6 +4,7 @@ const { createUser } = require("../controllers/userController");
 const { authenticateUser } = require("../controllers/authController");
 const {
   createGroup,
+  getGroups,
   updateGroup,
   deleteGroup,
 } = require("../controllers/groupController");
@@ -45,6 +46,12 @@ router.post(
     check("cicle", "Agrega el ciclo").notEmpty(),
   ],
   createGroup
+);
+
+router.get(
+  "/group",
+  auth,
+  getGroups
 );
 
 router.put(

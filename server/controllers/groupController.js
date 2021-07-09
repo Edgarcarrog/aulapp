@@ -33,6 +33,21 @@ exports.createGroup = async (req, res) => {
   }
 };
 
+exports.getGroups = async (req, res) => {
+
+  //extraer id del profesor
+  const teacherId = req.user.id;
+  try {
+    const groups = await Group.find({ teacher: teacherId }).sort({
+      createdAt: -1,
+    });
+    return res.status(200).json(groups);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Hubo un error");
+  }
+};
+
 exports.updateGroup = async (req, res) => {
 
     //revisar si hay errores
