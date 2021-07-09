@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const Group = require("../models/Group");
 const { validationResult } = require("express-validator");
+const mongoose = require('mongoose');
 
 exports.createGroup = async (req, res) => {
 
@@ -61,6 +62,33 @@ exports.updateGroup = async (req, res) => {
       );
 
       return res.status(200).json(group);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send("Hubo un error");
+    }
+  };
+  
+  exports.deleteGroup = async (req, res) => {
+    try {
+      const groupId = req.params.id;
+      const teacherId = req.user.id;
+      var userID = mongoose.mongo.ObjectID(groupId);
+      let group = await Group.findById(groupId);
+
+      if (!group) {
+        return res.status(400).json({ msg: "El grupo no existe" });
+      }
+      if (group.teacher.toString() !== req.user.id) {
+        return res.status(401).json({ msg: "No autorizado" });
+      }
+
+      group = await Group.findByIdAndDelete(groupId);
+
+      //elimina el grupo indicado del array de grupos del usuario
+      await User.findByIdAndUpdate(teacherId, {
+        $pullAll: { groups: [userID] },
+      });
+      return res.status(200).json({ msg: "Proyecto eliminado", group });
     } catch (error) {
       console.log(error);
       return res.status(500).send("Hubo un error");

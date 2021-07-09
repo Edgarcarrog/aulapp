@@ -2,7 +2,11 @@
 const router = require("express").Router();
 const { createUser } = require("../controllers/userController");
 const { authenticateUser } = require("../controllers/authController");
-const { createGroup, updateGroup } = require("../controllers/groupController");
+const {
+  createGroup,
+  updateGroup,
+  deleteGroup,
+} = require("../controllers/groupController");
 const { check } = require("express-validator");
 const auth = require("../middlewares/auth");
 
@@ -52,6 +56,12 @@ router.put(
     check("cicle", "Agrega el ciclo").notEmpty(),
   ],
   updateGroup
+);
+
+router.delete(
+  "/group/:id",
+  auth,
+  deleteGroup
 );
 
 module.exports = router;
