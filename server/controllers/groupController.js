@@ -103,7 +103,7 @@ exports.updateGroup = async (req, res) => {
       await User.findByIdAndUpdate(teacherId, {
         $pullAll: { groups: [userID] },
       });
-      return res.status(200).json({ msg: "Proyecto eliminado", group });
+      return res.status(200).json({ msg: "Grupo eliminado", group });
     } catch (error) {
       console.log(error);
       return res.status(500).send("Hubo un error");

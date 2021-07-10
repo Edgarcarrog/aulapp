@@ -16,13 +16,11 @@ exports.authenticateUser = async (req, res) => {
 
   try {
     let user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ msg: "El usuario no existe" });
-    }
-
-    const correctPass = await bcrypt.compare(password, user.password);
+    const correctPass =
+      user === null ? false : await bcrypt.compare(password, user.password);
+    
     if (!correctPass) {
-      return res.status(400).json({ msg: "El password es incorrecto" });
+      return res.status(400).json({ msg: "Usuario o password incorrecto" });
     }
 
     //crear y firmar el JsonWebToken
