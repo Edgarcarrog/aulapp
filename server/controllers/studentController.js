@@ -1,8 +1,6 @@
 
-const User = require("../models/User");
 const Student = require("../models/Student");
 const { validationResult } = require("express-validator");
-const mongoose = require('mongoose');
 
 exports.createStudent = async (req, res) => {
 
