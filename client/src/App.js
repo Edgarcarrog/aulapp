@@ -1,16 +1,10 @@
+
 import Header from "./components/Header";
+import Main from "./components/Main";
+import AppRouter from "./routers/AppRouter";
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <h1>Aulapp</h1>
-      <h1>Aulapp</h1>
-      <h1>Aulapp</h1>
-      <h1>Aulapp</h1>
-      <h1>Aulapp</h1>
-    </div>
-  );
+  return <AppRouter />;
 }
 
 export default App;
