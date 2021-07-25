@@ -3,8 +3,11 @@ import Table from "./Table";
 const Main = () => {
   return (
     <main className="row">
-      <h1>Main</h1>
-      <Table />
+      <div className="col">
+        <h2>Grupo</h2>
+        <h3>Período</h3>
+        <Table />
+      </div>
     </main>
   );
 };

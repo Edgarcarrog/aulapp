@@ -4,7 +4,7 @@ const Navbar = () => {
       <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
         <div class="container">
           <a class="navbar-brand" href="!#">
-            Navbar
+            Inicio
           </a>
           <button
             class="navbar-toggler"
@@ -21,27 +21,17 @@ const Navbar = () => {
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="!#">
-                  Home
+                  Grupos
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/createGroup">
+                  Crear Grupo
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="!#">
-                  Features
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="!#">
-                  Pricing
-                </a>
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link disabled"
-                  href="!#"
-                  tabindex="-1"
-                  aria-disabled="true"
-                >
-                  Disabled
+                  Editar
                 </a>
               </li>
             </ul>
