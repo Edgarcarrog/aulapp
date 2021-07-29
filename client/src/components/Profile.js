@@ -2,11 +2,11 @@
 import Header from "./Header";
 import Main from "./Main";
 
-const Profile = () => {
+const Profile = (props) => {
   return (
     <div className="App container-fluid">
       <Header />
-      <Main />
+      <Main props={props} />
     </div>
   );
 };

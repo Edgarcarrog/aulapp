@@ -1,11 +1,11 @@
 const Table = () => {
   return (
     <div className="table-responsive main-table">
-      <table class="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
-            <th scope="col" class="static">#</th>
-            <th scope="col" class="first-col">Nombre</th>
+            <th scope="col" className="static">#</th>
+            <th scope="col" className="first-col">Nombre</th>
             <th scope="col">Esp</th>
             <th scope="col">Mat</th>
             <th scope="col">C.N.</th>

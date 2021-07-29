@@ -3,12 +3,14 @@ import clienteAxios from "../config/axios";
 import { context } from "../context/context";
 import swal from "sweetalert2";
 
-const Login = (props) => {
-  const { authenticateUser, logUser } = useContext(context);
+const Signup = (props) => {
+  const { authenticateUser } = useContext(context);
 
   const [userData, setUserData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -17,24 +19,29 @@ const Login = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!userData.email.trim() || !userData.password.trim()) {
+    if (userData.password.trim().length < 6) {
       return swal.fire({
         icon: "error",
-        title: "Introduce tu email y password",
+        title: "El password debe tener mínimo 6 caracteres",
+        confirmButtonColor: "#1a202d",
+      });
+    } else if (userData.password.trim() !== userData.confirmPassword.trim()) {
+      return swal.fire({
+        icon: "error",
+        title: "Los passwords deben ser iguales",
         confirmButtonColor: "#1a202d",
       });
     }
     try {
-      const respuesta = await clienteAxios.post("/api/auth", userData);
+      const respuesta = await clienteAxios.post("/api/users", userData);
       localStorage.setItem("token", respuesta.data.token);
-      logUser();
+      props.history.push("/profile");
       swal.fire({
         icon: "success",
         title: respuesta.data.msg,
         confirmButtonColor: "#1a202d",
       });
       authenticateUser();
-      props.history.push("/profile");
     } catch (error) {
       swal.fire({
         icon: "error",
@@ -49,6 +56,18 @@ const Login = (props) => {
       <div className="row">
         <div className="col-md-6">
           <form>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Nombre
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                onChange={handleChange}
+              ></input>
+            </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
@@ -74,31 +93,31 @@ const Login = (props) => {
                 onChange={handleChange}
               ></input>
             </div>
+            <div className="mb-3">
+              <label htmlFor="confirmPassword" className="form-label">
+                Confirma el Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                onChange={handleChange}
+              ></input>
+            </div>
             <div className="mb-3 form-check"></div>
             <button
               type="submit"
-              className="btn btn-success"
+              className="btn btn-primary"
               onClick={handleSubmit}
             >
-              Iniciar Sesión
+              Registrarse
             </button>
           </form>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6">
-          <p>o</p>
-          <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {props.history.push("/signup")}}
-            >
-              Regístrate
-            </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

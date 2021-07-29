@@ -1,5 +1,6 @@
 
 require("dotenv").config();
+const cors = require("cors");
 
 const express = require("express");
 const conectarDB = require("./config/db");
@@ -16,6 +17,7 @@ const app = express();
 conectarDB();
 
 //middlewares
+app.use(cors());
 app.use(express.json({ extended: true }));
 
 //puerto de la app

@@ -1,33 +1,39 @@
 import { useState } from "react";
+import clienteAxios from "../config/axios";
 
 const CreateGroup = () => {
   const [group, setGroup] = useState({
-    grado: "",
-    grupo: "",
-    ciclo: "",
+    grade: "",
+    name: "",
+    cicle: "",
   });
 
   const handleChange = (e) => {
     setGroup({ ...group, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Hola");
+    try {
+      const resultado = await clienteAxios.post("/api/group", group);
+      console.log(resultado);;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="container">
-      <form class="row g-3 needs-validation" novalidate>
-        <div class="col-md-12">
-          <label for="grado" class="form-label">
+      <form className="row g-3 needs-validation" novalidate>
+        <div className="col-md-12">
+          <label htmlFor="grado" className="form-label">
             Grado
           </label>
           <select
-            class="form-select"
+            className="form-select"
             id="grado"
             required
-            name="grado"
+            name="grade"
             onChange={handleChange}
           >
             <option selected disabled value="">
@@ -40,17 +46,17 @@ const CreateGroup = () => {
             <option value="5">5o</option>
             <option value="6">6o</option>
           </select>
-          <div class="invalid-feedback">Please select a valid state.</div>
+          <div className="invalid-feedback">Please select a valid state.</div>
         </div>
-        <div class="col-md-12">
-          <label for="grupo" class="form-label">
+        <div className="col-md-12">
+          <label htmlFor="grupo" className="form-label">
             Grupo
           </label>
           <select
-            class="form-select"
+            className="form-select"
             id="grupo"
             required
-            name="grupo"
+            name="name"
             onChange={handleChange}
           >
             <option selected disabled value="">
@@ -62,17 +68,17 @@ const CreateGroup = () => {
             <option value="D">"D"</option>
             <option value="E">"E"</option>
           </select>
-          <div class="invalid-feedback">Please select a valid state.</div>
+          <div className="invalid-feedback">Please select a valid state.</div>
         </div>
-        <div class="col-md-12">
-          <label for="ciclo" class="form-label">
+        <div className="col-md-12">
+          <label htmlFor="ciclo" className="form-label">
             Ciclo Escolar
           </label>
           <select
-            class="form-select"
+            className="form-select"
             id="ciclo"
             required
-            name="ciclo"
+            name="cicle"
             onChange={handleChange}
           >
             <option selected disabled value="">
@@ -84,10 +90,10 @@ const CreateGroup = () => {
             <option value="2023-2024">2023-2024</option>
             <option value="2024-2025">2024-2025</option>
           </select>
-          <div class="invalid-feedback">Please select a valid state.</div>
+          <div className="invalid-feedback">Please select a valid state.</div>
         </div>
-        <div class="col-12">
-          <button class="btn btn-primary" type="submit" onClick={handleSubmit}>
+        <div className="col-12">
+          <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
             Aceptar
           </button>
         </div>
