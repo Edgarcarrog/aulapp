@@ -20,7 +20,7 @@ const Provider = (props) => {
       payload: data,
     });
   };
-  
+
   const logUser = () => {
     dispatch({
       type: "LOG_USER",
@@ -34,9 +34,13 @@ const Provider = (props) => {
   };
 
   useEffect(() => {
-    authenticateUser();
+    setUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const setUser = async () => {
+    await authenticateUser();
+  };
 
   const authenticateUser = async () => {
     try {

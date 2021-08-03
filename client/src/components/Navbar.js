@@ -1,11 +1,13 @@
+import { NavLink } from 'react-router-dom';
+
 const Navbar = () => {
   return (
     <div className="col-lg-10 mx-auto">
       <nav className="navbar navbar-expand-lg navbar-light bg-light nav">
         <div className="container">
-          <a className="navbar-brand" href="!#">
+          <NavLink className="navbar-brand" to="/">
             Inicio
-          </a>
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"
@@ -20,19 +22,19 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="!#">
+                <NavLink className="nav-link" aria-current="page" to="/groups">
                   Grupos
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/createGroup">
+                <NavLink className="nav-link" to="/createGroup">
                   Crear Grupo
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="!#">
+                <NavLink className="nav-link" to="/edit">
                   Editar
-                </a>
+                </NavLink>
               </li>
             </ul>
           </div>

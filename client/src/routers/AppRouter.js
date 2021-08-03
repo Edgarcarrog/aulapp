@@ -6,14 +6,17 @@ import Profile from "../components/Profile";
 import CreateGroup from "../components/CreateGroup";
 import Provider from "../context/context";
 import PrivateRoute from "./PrivateRoute";
+import LoggedRoute from "./LoggedRoute";
+import Header from "../components/Header";
 
 const AppRouter = () => {
   return (
     <Provider>
       <BrowserRouter>
+        <Header />
         <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <LoggedRoute exact path="/" component={Login} />
+          <LoggedRoute exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/createGroup" component={CreateGroup} />
           <Route path="*" component={Error} />

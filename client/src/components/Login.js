@@ -1,10 +1,11 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import clienteAxios from "../config/axios";
-import { context } from "../context/context";
 import swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 
 const Login = (props) => {
-  const { authenticateUser, logUser } = useContext(context);
+  console.log(props);
+  const history = useHistory();
 
   const [userData, setUserData] = useState({
     email: "",
@@ -27,15 +28,16 @@ const Login = (props) => {
     try {
       const respuesta = await clienteAxios.post("/api/auth", userData);
       localStorage.setItem("token", respuesta.data.token);
-      logUser();
+      console.log(respuesta);
       swal.fire({
         icon: "success",
         title: respuesta.data.msg,
         confirmButtonColor: "#1a202d",
       });
-      authenticateUser();
-      props.history.push("/profile");
+
+      history.push("/profile");
     } catch (error) {
+      console.log(error.response);
       swal.fire({
         icon: "error",
         title: error.response.data.msg,
@@ -89,12 +91,14 @@ const Login = (props) => {
         <div className="col-md-6">
           <p>o</p>
           <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {props.history.push("/signup")}}
-            >
-              Regístrate
-            </button>
+            type="button"
+            className="btn btn-primary"
+            onClick={() => {
+              props.history.push("/signup");
+            }}
+          >
+            Regístrate
+          </button>
         </div>
       </div>
     </div>

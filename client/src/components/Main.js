@@ -5,13 +5,13 @@ import { useHistory } from "react-router-dom";
 
 const Main = ({props}) => {
 
-  const { logout } = useContext(context);
+  const { logout, user } = useContext(context);
   const history = useHistory();
   return (
     <Fragment>
       <main className="row">
         <div className="col">
-          <h2>Grupo</h2>
+          <h2>{user && user.name}</h2>
           <h3>Período</h3>
           <Table />
         </div>

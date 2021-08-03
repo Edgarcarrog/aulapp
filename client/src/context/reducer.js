@@ -4,8 +4,9 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: action.payload.user,
+        isLoggedIn: true,
       };
-      case "LOG_USER":
+    case "LOG_USER":
       return {
         ...state,
         isLoggedIn: true,
