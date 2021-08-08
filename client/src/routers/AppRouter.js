@@ -8,6 +8,8 @@ import Provider from "../context/context";
 import PrivateRoute from "./PrivateRoute";
 import LoggedRoute from "./LoggedRoute";
 import Header from "../components/Header";
+import Groups from "../components/Groups";
+import ListGroup from "../components/ListGroup";
 
 const AppRouter = () => {
   return (
@@ -19,6 +21,8 @@ const AppRouter = () => {
           <LoggedRoute exact path="/signup" component={Signup} />
           <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/createGroup" component={CreateGroup} />
+          <PrivateRoute exact path="/groups" component={Groups} />
+          <PrivateRoute exact path="/list-group" component={ListGroup} />
           <Route path="*" component={Error} />
         </Switch>
       </BrowserRouter>

@@ -9,6 +9,8 @@ const Provider = (props) => {
   const initialState = {
     user: null,
     isLoggedIn: false,
+    actualGroup: null,
+    actualizeTable: false,
   };
 
   //Dispatch para ejecutar las acciones
@@ -30,6 +32,20 @@ const Provider = (props) => {
   const deleteUser = () => {
     dispatch({
       type: "DELETE_USER",
+    });
+  };
+
+  const setActualGroup = async (id) => {
+    const grupo = await clienteAxios.get(`/api/group/${id}`);
+    dispatch({
+      type: "SET-GROUP",
+      payload: grupo.data,
+    });
+  };
+
+  const changeActualizeTable = () => {
+    dispatch({
+      type: "CHANGE-ACTUALIZETABLE",
     });
   };
 
@@ -56,6 +72,7 @@ const Provider = (props) => {
   };
 
   const logout = () => {
+    sessionStorage.clear();
     localStorage.removeItem("token");
     deleteUser();
   };
@@ -65,10 +82,14 @@ const Provider = (props) => {
       value={{
         user: state.user,
         isLoggedIn: state.isLoggedIn,
+        actualGroup: state.actualGroup,
+        actualizeTable: state.actualizeTable,
         addUser,
         authenticateUser,
         logUser,
         logout,
+        setActualGroup,
+        changeActualizeTable,
       }}
     >
       {props.children}

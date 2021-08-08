@@ -19,7 +19,9 @@ p {
 }
 
 .fondo {
-  height: 50vh;
+  margin: 0;
+  width: 100%;
+  height: 40vh;
   background-image: url("./assets/back_image.png");
   background-size: cover;
 }
@@ -34,10 +36,24 @@ p {
   /* padding: 0 1rem; */
 }
 
-.static{
-  position: absolute;
+.sticky{
+  position: sticky;
+  left: 0;
+  background-color: rgb(246, 246, 246) !important;
 }
 
 .first-col {
   /* padding-left: 74.5px!important; */
+}
+
+.text-center{
+  text-align: center;
+}
+
+.text-left{
+  text-align: left;
+}
+
+.link{
+  text-decoration: none;
 }

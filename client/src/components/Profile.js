@@ -4,7 +4,7 @@ import { context } from "../context/context";
 import { useContext, useEffect} from 'react'
 
 const Profile = (props) => {
-  const { authenticateUser, logUser } = useContext(context);
+  const { authenticateUser } = useContext(context);
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -16,7 +16,6 @@ const Profile = (props) => {
 
   const loadUser = async() => {
     await authenticateUser();
-    //logUser();
   }
   
   

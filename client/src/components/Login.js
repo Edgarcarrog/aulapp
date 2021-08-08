@@ -4,7 +4,7 @@ import swal from "sweetalert2";
 import { useHistory } from "react-router-dom";
 
 const Login = (props) => {
-  console.log(props);
+  //console.log(props);
   const history = useHistory();
 
   const [userData, setUserData] = useState({
@@ -28,7 +28,7 @@ const Login = (props) => {
     try {
       const respuesta = await clienteAxios.post("/api/auth", userData);
       localStorage.setItem("token", respuesta.data.token);
-      console.log(respuesta);
+      //console.log(respuesta);
       swal.fire({
         icon: "success",
         title: respuesta.data.msg,

@@ -17,6 +17,16 @@ const reducer = (state, action) => {
         user: null,
         isLoggedIn: false,
       };
+    case "SET-GROUP":
+      return {
+        ...state,
+        actualGroup: action.payload,
+      };
+      case "CHANGE-ACTUALIZETABLE":
+      return {
+        ...state,
+        actualizeTable: !state.actualizeTable,
+      };
     default:
       return state;
   }

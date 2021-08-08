@@ -27,11 +27,6 @@ router.get("/:id", auth, getStudents);
 router.put(
   "/:id",
   auth,
-  [
-    check("name", "Agrega el nombre del estudiante").notEmpty(),
-    check("fatherLastname", "Agrega el apellido paterno").notEmpty(),
-    check("motherLastname", "Agrega el apellido materno").notEmpty(),
-  ],
   updateStudent
 );
 

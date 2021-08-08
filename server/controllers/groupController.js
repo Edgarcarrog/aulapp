@@ -1,11 +1,9 @@
-
 const User = require("../models/User");
 const Group = require("../models/Group");
 const { validationResult } = require("express-validator");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 exports.createGroup = async (req, res) => {
-
   //revisar si hay errores
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -16,7 +14,12 @@ exports.createGroup = async (req, res) => {
   const { name, grade, cicle } = req.body;
   const teacherId = req.user.id;
   try {
-    let group = await Group.findOne({ name, grade, cicle });
+    let group = await Group.findOne({
+      name,
+      grade,
+      cicle,
+      teacher: teacherId,
+    });
     if (group) {
       return res.status(400).json({ msg: "El grupo ya existe" });
     }
@@ -26,7 +29,18 @@ exports.createGroup = async (req, res) => {
 
     await User.findByIdAndUpdate(teacherId, { $push: { groups: group._id } });
     return res.status(200).json(group);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Hubo un error");
+  }
+};
 
+exports.getOneGroup = async (req, res) => {
+  //extraer id del profesor
+  const Id = req.params.id;
+  try {
+    const group = await Group.findById(Id);
+    return res.status(200).json(group);
   } catch (error) {
     console.log(error);
     return res.status(500).send("Hubo un error");
@@ -34,12 +48,13 @@ exports.createGroup = async (req, res) => {
 };
 
 exports.getGroups = async (req, res) => {
-
   //extraer id del profesor
   const teacherId = req.user.id;
   try {
     const groups = await Group.find({ teacher: teacherId }).sort({
-      createdAt: -1,
+      grade: 1,
+      name: 1,
+      cicle: 1,
     });
     return res.status(200).json(groups);
   } catch (error) {
@@ -49,64 +64,58 @@ exports.getGroups = async (req, res) => {
 };
 
 exports.updateGroup = async (req, res) => {
+  //revisar si hay errores
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
-    //revisar si hay errores
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+  //extraer email y password
+  const { name, grade, cicle } = req.body;
+  const groupId = req.params.id;
+
+  try {
+    let group = await Group.findById(groupId);
+
+    if (!group) {
+      return res.status(400).json({ msg: "El grupo no existe" });
     }
-  
-    //extraer email y password
-    const { name, grade, cicle } = req.body;
+    if (group.teacher.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "No autorizado" });
+    }
+
+    group = await Group.findByIdAndUpdate(groupId, req.body, { new: true });
+
+    return res.status(200).json(group);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Hubo un error");
+  }
+};
+
+exports.deleteGroup = async (req, res) => {
+  try {
     const groupId = req.params.id;
+    const teacherId = req.user.id;
+    var userID = mongoose.mongo.ObjectID(groupId);
+    let group = await Group.findById(groupId);
 
-    try {
-      let group = await Group.findById(groupId);
-
-      if (!group) {
-        return res.status(400).json({ msg: "El grupo no existe" });
-      }
-      if (group.teacher.toString() !== req.user.id) {
-        return res.status(401).json({ msg: "No autorizado" });
-      }
-
-      group = await Group.findByIdAndUpdate(
-        groupId,
-        req.body,
-        { new: true }
-      );
-
-      return res.status(200).json(group);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send("Hubo un error");
+    if (!group) {
+      return res.status(400).json({ msg: "El grupo no existe" });
     }
-  };
-  
-  exports.deleteGroup = async (req, res) => {
-    try {
-      const groupId = req.params.id;
-      const teacherId = req.user.id;
-      var userID = mongoose.mongo.ObjectID(groupId);
-      let group = await Group.findById(groupId);
-
-      if (!group) {
-        return res.status(400).json({ msg: "El grupo no existe" });
-      }
-      if (group.teacher.toString() !== req.user.id) {
-        return res.status(401).json({ msg: "No autorizado" });
-      }
-
-      group = await Group.findByIdAndDelete(groupId);
-
-      //elimina el grupo indicado del array de grupos del usuario
-      await User.findByIdAndUpdate(teacherId, {
-        $pullAll: { groups: [userID] },
-      });
-      return res.status(200).json({ msg: "Grupo eliminado", group });
-    } catch (error) {
-      console.log(error);
-      return res.status(500).send("Hubo un error");
+    if (group.teacher.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "No autorizado" });
     }
-  };
-  
+
+    group = await Group.findByIdAndDelete(groupId);
+
+    //elimina el grupo indicado del array de grupos del usuario
+    await User.findByIdAndUpdate(teacherId, {
+      $pullAll: { groups: [userID] },
+    });
+    return res.status(200).json({ msg: "Grupo eliminado", group });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Hubo un error");
+  }
+};

@@ -1,7 +1,10 @@
 import { useState } from "react";
 import clienteAxios from "../config/axios";
+import swal from "sweetalert2";
+import { useHistory } from "react-router-dom";
 
 const CreateGroup = () => {
+  const history = useHistory();
   const [group, setGroup] = useState({
     grade: "",
     name: "",
@@ -14,17 +17,39 @@ const CreateGroup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const { grade, name, cicle } = group;
+    if (grade === "" || name === "" || cicle === "") {
+      return swal.fire({
+        icon: "error",
+        title: "Todos los campos son obligatorios",
+        confirmButtonColor: "#1a202d",
+      });
+    }
     try {
-      const resultado = await clienteAxios.post("/api/group", group);
-      console.log(resultado);;
+      await clienteAxios.post("/api/group", group);
+      swal.fire({
+        icon: "success",
+        title: "Grupo creado",
+        confirmButtonColor: "#1a202d",
+      });
+      setGroup({
+        grade: "",
+        name: "",
+        cicle: "",
+      });
+      history.push("/groups")
     } catch (error) {
-      console.log(error);
+      swal.fire({
+        icon: "error",
+        title: error.response.data.msg,
+        confirmButtonColor: "#1a202d",
+      });
     }
   };
 
   return (
     <div className="container">
-      <form className="row g-3 needs-validation" novalidate>
+      <form className="row g-3 needs-validation" noValidate>
         <div className="col-md-12">
           <label htmlFor="grado" className="form-label">
             Grado
@@ -35,8 +60,9 @@ const CreateGroup = () => {
             required
             name="grade"
             onChange={handleChange}
+            value={group.grade}
           >
-            <option selected disabled value="">
+            <option disabled value="">
               Selecciona un grado
             </option>
             <option value="1">1o</option>
@@ -58,8 +84,9 @@ const CreateGroup = () => {
             required
             name="name"
             onChange={handleChange}
+            value={group.name}
           >
-            <option selected disabled value="">
+            <option disabled value="">
               Selecciona un grupo
             </option>
             <option value="A">"A"</option>
@@ -80,8 +107,9 @@ const CreateGroup = () => {
             required
             name="cicle"
             onChange={handleChange}
+            value={group.cicle}
           >
-            <option selected disabled value="">
+            <option disabled value="">
               Selecciona un ciclo escolar
             </option>
             <option value="2020-2021">2020-2021</option>
@@ -93,7 +121,11 @@ const CreateGroup = () => {
           <div className="invalid-feedback">Please select a valid state.</div>
         </div>
         <div className="col-12">
-          <button className="btn btn-primary" type="submit" onClick={handleSubmit}>
+          <button
+            className="btn btn-primary"
+            type="submit"
+            onClick={handleSubmit}
+          >
             Aceptar
           </button>
         </div>

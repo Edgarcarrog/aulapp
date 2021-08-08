@@ -5,6 +5,7 @@ const auth = require("../middlewares/auth");
 
 const {
   createGroup,
+  getOneGroup,
   getGroups,
   updateGroup,
   deleteGroup,
@@ -21,6 +22,8 @@ router.post(
   ],
   createGroup
 );
+
+router.get("/:id", auth, getOneGroup);
 
 router.get("/", auth, getGroups);
 
