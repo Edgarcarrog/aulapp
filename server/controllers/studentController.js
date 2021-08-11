@@ -31,6 +31,19 @@ exports.createStudent = async (req, res) => {
   }
 };
 
+exports.getOneStudent = async (req, res) => {
+  //extraer id del grupo
+  const id = req.params.id;
+
+  try {
+    const student = await Student.findById(id);
+    return res.status(200).json(student);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Hubo un error");
+  }
+};
+
 exports.getStudents = async (req, res) => {
   //extraer id del grupo
   const groupId = req.params.id;

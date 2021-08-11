@@ -26,8 +26,8 @@ const Table = () => {
   const chargeStudents = async () => {
     partial = sessionStorage.getItem("partial");
     avr = sessionStorage.getItem("avr");
+    const token = localStorage.getItem("token");
     try {
-      const token = localStorage.getItem("token");
       if (token && actualGroup) {
         tokenAuth(token);
         const students = await clienteAxios.get(
@@ -53,6 +53,10 @@ const Table = () => {
         }))
       );
     }
+  };
+
+  const setStudent = (student) => {
+    sessionStorage.setItem("student", student);
   };
 
   const handleChange = (e) => {
@@ -168,7 +172,11 @@ const Table = () => {
                     <tr key={student._id}>
                       <th scope="row">{indexStudent + 1}</th>
                       <td className="text-left sticky">
-                        <Link className="link" to="/groups">
+                        <Link
+                          className="link"
+                          to="/student-detail"
+                          onClick={() => setStudent(student._id)}
+                        >
                           {student.fatherLastname} {student.motherLastname}{" "}
                           {student.name}
                         </Link>
@@ -185,7 +193,7 @@ const Table = () => {
                               max="10"
                               step="0.5"
                               value={
-                                students[indexStudent][partial][indexSubject]
+                                grade
                               }
                               onChange={handleChange}
                             ></input>
@@ -193,7 +201,6 @@ const Table = () => {
                         );
                       })}
                       <td>
-                        {/* //TODO: */}
                         {Math.round(
                           (10 *
                             student[partial].reduce(

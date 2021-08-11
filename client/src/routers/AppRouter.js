@@ -10,6 +10,7 @@ import LoggedRoute from "./LoggedRoute";
 import Header from "../components/Header";
 import Groups from "../components/Groups";
 import ListGroup from "../components/ListGroup";
+import StudentDetail from "../components/StudentDetail";
 
 const AppRouter = () => {
   return (
@@ -23,6 +24,11 @@ const AppRouter = () => {
           <PrivateRoute exact path="/createGroup" component={CreateGroup} />
           <PrivateRoute exact path="/groups" component={Groups} />
           <PrivateRoute exact path="/list-group" component={ListGroup} />
+          <PrivateRoute
+            exact
+            path="/student-detail"
+            component={StudentDetail}
+          />
           <Route path="*" component={Error} />
         </Switch>
       </BrowserRouter>

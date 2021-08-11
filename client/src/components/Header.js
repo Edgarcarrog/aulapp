@@ -1,11 +1,14 @@
 import Navbar from "./Navbar";
+import { context } from "../context/context";
+import { Fragment, useContext } from "react";
 //import Title from "./Title";
 
 const Header = () => {
+  const { isLoggedIn } = useContext(context);
   return (
-    <header className="fondo row">
-      <Navbar />
-    </header>
+    <Fragment>
+      <header className="fondo row">{isLoggedIn && <Navbar />}</header>
+    </Fragment>
   );
 };
 

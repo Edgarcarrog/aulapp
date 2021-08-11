@@ -5,6 +5,7 @@ const auth = require("../middlewares/auth");
 
 const {
   createStudent,
+  getOneStudent,
   getStudents,
   updateStudent,
   deleteStudent,
@@ -22,6 +23,8 @@ router.post(
   createStudent
 );
  
+router.get("/one-student/:id", auth, getOneStudent);
+
 router.get("/:id", auth, getStudents);
 
 router.put(
