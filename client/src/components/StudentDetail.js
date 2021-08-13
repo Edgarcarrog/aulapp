@@ -2,11 +2,6 @@ import clienteAxios from "../config/axios";
 import { Fragment, useEffect, useState } from "react";
 import tokenAuth from "../config/token";
 import StudentUpdate from "./StudentUpdate";
-/* import { Fragment, useContext, useEffect, useState } from "react";
-import { context } from "../context/context";
-import tokenAuth from "../config/token";
-import swal from "sweetalert2";
-import { Link } from "react-router-dom"; */
 
 const StudentDetail = () => {
   const subjects = [
@@ -20,10 +15,11 @@ const StudentDetail = () => {
     "Educación Física",
   ];
   const [student, setStudent] = useState(null);
+  const [updateStudent, setUpdateStudent] = useState(false);
 
   useEffect(() => {
     getStudent();
-  }, []);
+  }, [updateStudent]);
 
   const getStudent = async () => {
     const studentId = sessionStorage.getItem("student");
@@ -91,6 +87,8 @@ const StudentDetail = () => {
             name={student.name}
             fatherLastname={student.fatherLastname}
             motherLastname={student.motherLastname}
+            updateStudent={updateStudent}
+            setUpdateStudent={setUpdateStudent}
           />
         </Fragment>
       )}

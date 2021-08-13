@@ -8,10 +8,13 @@ import { Link } from "react-router-dom";
 const Table = () => {
   let partial = sessionStorage.getItem("partial");
   let avr = sessionStorage.getItem("avr");
+  const [btnActive, setBtnActive] = useState([]);
 
   const { actualGroup, actualizeTable } = useContext(context);
+
   const [students, setStudents] = useState(null);
   const [changeAverage, setChangeAverage] = useState(false);
+  const [disableButton, setDisableButton] = useState(true);
 
   useEffect(() => {
     chargeStudents();
@@ -34,6 +37,10 @@ const Table = () => {
           `/api/student/${actualGroup._id}?partial=${partial}&avr=${avr}`
         );
         setStudents(students.data);
+        if (partial === "diagnostic") setBtnActive([1, 0, 0, 0]);
+        else if (partial === "firstPartial") setBtnActive([0, 1, 0, 0]);
+        else if (partial === "secondPartial") setBtnActive([0, 0, 1, 0]);
+        else if (partial === "thirdPartial") setBtnActive([0, 0, 0, 1]);
       }
     } catch (error) {
       console.log(error);
@@ -76,6 +83,7 @@ const Table = () => {
       })
     );
     setChangeAverage(!changeAverage);
+    setDisableButton(false);
   };
 
   const handleSubmit = async (e) => {
@@ -85,8 +93,6 @@ const Table = () => {
       if (token && actualGroup) {
         tokenAuth(token);
         await students.forEach((student) => {
-          //const diagnostic = student[partial];
-          //const diagnosticAvr = student.diagnosticAvr;
           clienteAxios.put(`/api/student/${student._id}`, {
             [partial]: student[partial],
             [avr]: student[avr],
@@ -97,6 +103,7 @@ const Table = () => {
           title: "Actualizado",
           confirmButtonColor: "#1a202d",
         });
+        setDisableButton(true);
       }
     } catch (error) {
       console.log(error);
@@ -106,7 +113,7 @@ const Table = () => {
   return (
     <Fragment>
       <button
-        className="btn btn-primary m-2"
+        className={btnActive[0] ? "btn btn-primary m-2" : "btn btn-light m-2"}
         onClick={() => {
           sessionStorage.setItem("partial", "diagnostic");
           sessionStorage.setItem("avr", "diagnosticAvr");
@@ -116,7 +123,7 @@ const Table = () => {
         Diagnóstico
       </button>
       <button
-        className="btn btn-primary m-2"
+        className={btnActive[1] ? "btn btn-primary m-2" : "btn btn-light m-2"}
         onClick={() => {
           sessionStorage.setItem("partial", "firstPartial");
           sessionStorage.setItem("avr", "firstPartialAvr");
@@ -126,7 +133,7 @@ const Table = () => {
         1er Parcial
       </button>
       <button
-        className="btn btn-primary m-2"
+        className={btnActive[2] ? "btn btn-primary m-2" : "btn btn-light m-2"}
         onClick={() => {
           sessionStorage.setItem("partial", "secondPartial");
           sessionStorage.setItem("avr", "secondPartialAvr");
@@ -136,7 +143,7 @@ const Table = () => {
         2o Parcial
       </button>
       <button
-        className="btn btn-primary m-2"
+        className={btnActive[3] ? "btn btn-primary m-2" : "btn btn-light m-2"}
         onClick={() => {
           sessionStorage.setItem("partial", "thirdPartial");
           sessionStorage.setItem("avr", "thirdPartialAvr");
@@ -188,13 +195,10 @@ const Table = () => {
                             <input
                               type="number"
                               id={id}
-                              /* name="tentacles" */
                               min="5"
                               max="10"
                               step="0.5"
-                              value={
-                                grade
-                              }
+                              value={grade}
                               onChange={handleChange}
                             ></input>
                           </td>
@@ -204,7 +208,7 @@ const Table = () => {
                         {Math.round(
                           (10 *
                             student[partial].reduce(
-                              (acc, curr) => acc + curr
+                              (acc, curr) => acc + (curr || 0)
                             )) /
                             student[partial].length
                         ) / 10}
@@ -219,6 +223,7 @@ const Table = () => {
         type="button"
         className="btn btn-success m-2"
         onClick={handleSubmit}
+        disabled={disableButton}
       >
         Guardar
       </button>

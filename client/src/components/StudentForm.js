@@ -154,18 +154,18 @@ const StudentForm = () => {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"
                 onClick={handleSubmit}
               >
                 Añadir
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
               </button>
             </div>
           </div>

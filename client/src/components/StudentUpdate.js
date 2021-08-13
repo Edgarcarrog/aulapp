@@ -1,16 +1,65 @@
 import { Fragment, useState } from "react";
-/* import { useHistory } from "react-router-dom"; */
+import { useHistory } from "react-router-dom";
 import clienteAxios from "../config/axios";
 import tokenAuth from "../config/token";
 import swal from "sweetalert2";
 
-const StudentUpdate = ({ name, fatherLastname, motherLastname, id }) => {
-
+const StudentUpdate = ({
+  name,
+  fatherLastname,
+  motherLastname,
+  id,
+  setUpdateStudent,
+  updateStudent,
+}) => {
+  const history = useHistory();
   const [student, setStudent] = useState({
     name: name,
     fatherLastname: fatherLastname,
     motherLastname: motherLastname,
   });
+
+  const deleteStudent = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      tokenAuth(token);
+      swal
+        .fire({
+          title: "¿Deseas continuar?",
+          text: "El alumno se eliminará de forma permanente",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#1a202d",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Cancelar",
+          confirmButtonText: "Aceptar",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            clienteAxios
+              .delete(`/api/student/${id}`)
+              .then((response) => {
+                swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Alumno eliminado",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                console.log(response);
+                history.push("/list-group");
+              })
+              .catch((error) => {
+                swal.fire({
+                  icon: "error",
+                  title: error.response.data.msg,
+                  confirmButtonColor: "#1a202d",
+                });
+              });
+          }
+        });
+    }
+  };
 
   const handleChange = (e) => {
     setStudent({
@@ -39,8 +88,8 @@ const StudentUpdate = ({ name, fatherLastname, motherLastname, id }) => {
           title: "Modificado",
           confirmButtonColor: "#1a202d",
         });
-        /* changeActualizeTable(); 
-        history.push("/list-group");*/
+        setUpdateStudent(!updateStudent); 
+        /*history.push("/list-group");*/
       }
     } catch (error) {
       swal.fire({
@@ -59,7 +108,7 @@ const StudentUpdate = ({ name, fatherLastname, motherLastname, id }) => {
         data-bs-target="#exampleModal"
         data-bs-whatever="@mdo"
       >
-        Actualizar Alumno
+        Modificar Nombre
       </button>
 
       <div
@@ -128,23 +177,30 @@ const StudentUpdate = ({ name, fatherLastname, motherLastname, id }) => {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button
-                type="button"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"
                 onClick={handleSubmit}
               >
                 Actualizar
               </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <button
+        type="button"
+        className="btn btn-danger m-2"
+        onClick={deleteStudent}
+      >
+        Eliminar Alumno
+      </button>
     </Fragment>
   );
 };

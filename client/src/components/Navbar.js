@@ -1,6 +1,11 @@
-import { NavLink } from 'react-router-dom';
+import { useContext } from "react";
+import { context } from "../context/context";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
+
+  const { logout } = useContext(context);
+
   return (
     <div className="col-lg-10 mx-auto">
       <nav className="navbar navbar-expand-lg navbar-light bg-light nav">
@@ -32,8 +37,12 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/edit">
-                  Editar
+                <NavLink
+                  className="nav-link"
+                  to="/"
+                  onClick={() => logout()}
+                >
+                  Cerrar Sesión
                 </NavLink>
               </li>
             </ul>

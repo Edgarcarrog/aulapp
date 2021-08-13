@@ -9,7 +9,7 @@ const Main = ({ props }) => {
     <Fragment>
       <main className="row">
         <div className="col">
-          <h2>{user && user.name}</h2>
+          <h2>Profesor(a): {user && user.name}</h2>
           <h3>Período</h3>
         </div>
       </main>
