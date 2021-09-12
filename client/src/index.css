@@ -1,12 +1,13 @@
 body {
-  font-family: "Signika Negative", sans-serif;
+  font-family: "Reem Kufi", "Signika Negative", sans-serif;
   max-width: 100vw;
+  background-color: #eef6f8;
 }
 
 h1,
 h2,
 h3 {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 h1 {
@@ -15,15 +16,49 @@ h1 {
 
 p {
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 1rem;
 }
 
 .fondo {
   margin: 0;
   width: 100%;
-  height: 40vh;
+  height: 200px;
   background-image: url("./assets/back_image.png");
   background-size: cover;
+}
+
+.classroom {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 25vw;
+  border-radius: 10px;
+  background-image: url("./assets/classroom.jpg");
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 5px 1px #5d4157;
+  border-radius: 1rem;
+}
+
+.group {
+  position: relative;
+  margin: 0;
+  width: 100%;
+  height: 25vw;
+  border-radius: 10px;
+  background-image: url("./assets/group.jpg");
+  background-size: cover;
+  box-shadow: 0 0 5px 1px #5d4157;
+  border-radius: 1rem;
+}
+
+.subtext {
+  position: absolute;
+  padding: 10px;
+  top: 40%;
+  left: 45%;
+  /* text-shadow: 1px 1px 5px rgb(44, 44, 44); */
+  font-weight: bolder;
 }
 
 .nav {
@@ -32,29 +67,109 @@ p {
   color: antiquewhite !important;
 }
 
-.main-table {
-  /* padding: 0 1rem; */
+.footer {
+  position: relative;
+  bottom: 0;
+  height: 5rem;
+  background-color: #5d4157;
+  text-align: center;
+  color: #fff;
 }
 
-.sticky{
+.box {
+  background-color: #fff;
+  position: relative;
+  top: -75px;
+  padding: 1rem;
+  box-shadow: 0 0 5px 1px #5d4157;
+  border-radius: 1rem;
+}
+
+.group-form {
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 0 5px 1px #5d4157;
+  border-radius: 1rem;
+}
+
+.btn-container {
+  background-color: #eef6f8;
+}
+
+.btn-main {
+  min-width: 20%;
+  background-color: #5d4157;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #d95b43;
+  color: #fff;
+}
+
+.sticky {
   position: sticky;
   left: 0;
   background-color: rgb(246, 246, 246) !important;
 }
-
-.first-col {
-  /* padding-left: 74.5px!important; */
+.sticky-top {
+  position: sticky;
+  top: 0;
 }
 
-.text-center{
+.text-center {
   text-align: center;
 }
 
-.text-left{
+.text-left {
   text-align: left;
 }
 
-.link{
-  text-decoration: none;
+.text-light {
+  color: #fff;
+}
+
+.text-dark {
   color: #000;
+}
+
+.link {
+  text-decoration: none;
+  background-color: none;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+.link:visited {
+  color: blue;
+}
+
+@media (max-width: 576px) {
+  .btn-main {
+    min-width: 40%;
+    background-color: #5d4157;
+    color: #fff;
+  }
+}
+
+@media (max-width: 768px) {
+  .fondo {
+    height: 30vh;
+  }
+
+  .classroom {
+    height: 40vw;
+  }
+
+  .group {
+    height: 40vw;
+  }
 }

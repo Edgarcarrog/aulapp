@@ -11,6 +11,7 @@ import Header from "../components/Header";
 import Groups from "../components/Groups";
 import ListGroup from "../components/ListGroup";
 import StudentDetail from "../components/StudentDetail";
+import Footer from "../components/Footer";
 
 const AppRouter = () => {
   return (
@@ -31,6 +32,7 @@ const AppRouter = () => {
           />
           <Route path="*" component={Error} />
         </Switch>
+        <Footer />
       </BrowserRouter>
     </Provider>
   );

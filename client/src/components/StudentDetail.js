@@ -42,7 +42,9 @@ const StudentDetail = () => {
     <div>
       {student && (
         <Fragment>
-          <h3>{`${student.fatherLastname} ${student.motherLastname} ${student.name}`}</h3>
+          <div className="d-flex justify-content-center mt-3">
+            <h3>{`${student.fatherLastname} ${student.motherLastname} ${student.name}`}</h3>
+          </div>
 
           <div className="table-responsive main-table">
             <table className="table table-striped text-center">

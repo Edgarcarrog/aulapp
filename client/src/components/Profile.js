@@ -18,7 +18,6 @@ const Profile = (props) => {
     await authenticateUser();
   }
   
-  
   return (
     <div className="App container-fluid">
       <Main props={props} />

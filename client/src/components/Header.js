@@ -7,7 +7,13 @@ const Header = () => {
   const { isLoggedIn } = useContext(context);
   return (
     <Fragment>
-      <header className="fondo row">{isLoggedIn && <Navbar />}</header>
+      <header className="fondo row">
+        {isLoggedIn ? (
+          <Navbar />
+        ) : (
+          <h2 className="text-light">Aulapp. Tu ayudante escolar.</h2>
+        )}
+      </header>
     </Fragment>
   );
 };

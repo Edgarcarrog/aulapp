@@ -9,24 +9,6 @@ const StudentForm = () => {
   const history = useHistory();
   const { actualGroup, changeActualizeTable } = useContext(context);
 
-  /* useEffect(() => {
-    chargeGroup();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const chargeGroup = () => {
-    try {
-      const token = localStorage.getItem("token");
-      const groupId = sessionStorage.getItem("groupId");
-      if (token && groupId) {
-        tokenAuth(token);
-        setActualGroupId(groupId);
-      }
-    } catch (error) {
-      console.log(error.response);
-    }
-  }; */
-
   const [student, setStudent] = useState({
     name: "",
     fatherLastname: "",

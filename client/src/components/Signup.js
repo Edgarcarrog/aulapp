@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import clienteAxios from "../config/axios";
+import { NavLink } from "react-router-dom";
 import { context } from "../context/context";
 import swal from "sweetalert2";
 
@@ -53,10 +54,10 @@ const Signup = (props) => {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-6">
+      <div className="row justify-content-center mt-2">
+        <div className="col-11 col-md-6 col-lg-4 box mx-2">
           <form>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="name" className="form-label">
                 Nombre
               </label>
@@ -65,10 +66,11 @@ const Signup = (props) => {
                 className="form-control"
                 id="name"
                 name="name"
+                autoFocus
                 onChange={handleChange}
               ></input>
             </div>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
@@ -81,7 +83,7 @@ const Signup = (props) => {
                 onChange={handleChange}
               ></input>
             </div>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="password" className="form-label">
                 Password
               </label>
@@ -93,7 +95,7 @@ const Signup = (props) => {
                 onChange={handleChange}
               ></input>
             </div>
-            <div className="mb-3">
+            <div className="mb-2">
               <label htmlFor="confirmPassword" className="form-label">
                 Confirma el Password
               </label>
@@ -105,14 +107,19 @@ const Signup = (props) => {
                 onChange={handleChange}
               ></input>
             </div>
-            <div className="mb-3 form-check"></div>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={handleSubmit}
-            >
-              Registrarse
-            </button>
+            <div className="mt-3">
+              <button
+                type="submit"
+                className="btn btn-main form-control"
+                onClick={handleSubmit}
+              >
+                Registrarse
+              </button>
+              <p className="paragraph text-center m-0 mt-3">
+                ¿Ya tienes una cuenta?{" "}
+                <NavLink className="link" to={"/"}>Iniciar sesión</NavLink>
+              </p>
+            </div>
           </form>
         </div>
       </div>
